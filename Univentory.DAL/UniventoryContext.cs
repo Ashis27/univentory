@@ -48,7 +48,7 @@ namespace Univentory.DAL
             public UniventoryContext CreateDbContext(string[] args)
             {
                 var optionsBuilder = new DbContextOptionsBuilder<UniventoryContext>()
-                    .UseSqlServer("Server=tcp:univentory.database.windows.net,1433;Initial Catalog=UniventoryContext;Persist Security Info=False;User ID=Univentory;Password=Uni@123456;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                    .UseSqlServer("Server=.;Initial Catalog=UniventoryContext;Integrated Security=true");
 
                 return new UniventoryContext(optionsBuilder.Options, null);
             }

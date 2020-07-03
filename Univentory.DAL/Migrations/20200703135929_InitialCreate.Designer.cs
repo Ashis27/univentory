@@ -10,7 +10,7 @@ using Univentory.DAL;
 namespace Univentory.DAL.Migrations
 {
     [DbContext(typeof(UniventoryContext))]
-    [Migration("20200703105402_InitialCreate")]
+    [Migration("20200703135929_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

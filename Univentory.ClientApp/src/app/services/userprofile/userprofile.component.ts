@@ -77,7 +77,7 @@ export class UserprofileComponent implements OnInit {
       (<FormControl>this.f['email']).setValue(consumerData.email);
       (<FormControl>this.f['mobileNumber']).setValue(consumerData.mobileNumber);
       (<FormControl>this.f['address']).setValue(consumerData.address);
-      (<FormControl>this.f['gstNumber']).setValue(consumerData.address);
+      (<FormControl>this.f['gstNumber']).setValue(consumerData.gstNumber);
       (<FormControl>this.f['passwordHash']).setValue(consumerData.passwordHash);
     }
   }
