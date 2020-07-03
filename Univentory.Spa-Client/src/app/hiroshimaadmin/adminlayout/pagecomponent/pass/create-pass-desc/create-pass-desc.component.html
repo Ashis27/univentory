@@ -1,0 +1,100 @@
+﻿<div bsModal #editPassDescModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="editPassDescModal"
+    aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog">
+        <div #modalContent class="modal-content">
+            <form *ngIf="active" [formGroup]="addPassDescForm" #editPassDescForm="ngForm" id="frm_create_user" novalidate (ngSubmit)="save()">
+                <div class="modal-header custom-modal-style">
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                        <span>{{lang("AddPassDescription")}}</span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane animated fadeIn active" id="user-details">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row">
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                            <label for="selectedLanguage">{{lang("SelectLanguage")}}</label>
+                                            <div class="form-line">
+                                                <select id="selectedLanguage" class="validate form-control" formControlName="selectedLanguage" [ngClass]="{ 'is-invalid': submitted && f.selectedLanguage.errors }">
+                                                    <option value="" class="optional-default-value">{{lang("SelectALanguage")}}</option>
+                                                    <option [value]="item.id" *ngFor="let item of _languages.languages"> {{item.name}}</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.selectedLanguage.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.selectedLanguage.errors.required">{{lang("LanguageIsRequired")}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                            <label for="passName">{{lang("PassName")}}</label>
+                                            <input type="text" formControlName="passName" class="form-control" placeholder="{{lang('EnterPassName')}}" [ngClass]="{ 'is-invalid': submitted && f.passName.errors }"
+                                            />
+                                            <div *ngIf="submitted && f.passName.errors" class="invalid-feedback">
+                                                <div *ngIf="f.passName.errors.required">{{lang("PassNameIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                            <label for="passDesc">{{lang("PassDescription")}}</label>
+                                            <textarea type="passDesc" formControlName="passDesc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.passDesc.errors }"></textarea>
+                                            <div *ngIf="submitted && f.passDesc.errors" class="invalid-feedback">
+                                                <div *ngIf="f.passDesc.errors.required">{{lang("PassDescriptionIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                            <label for="passAreaDescription">{{lang("PassAreaDescription")}}</label>
+                                            <textarea type="passAreaDescription" formControlName="passAreaDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.passAreaDescription.errors }"></textarea>
+                                            <div *ngIf="submitted && f.passAreaDescription.errors" class="invalid-feedback">
+                                                <div *ngIf="f.passAreaDescription.errors.required">{{lang("AreaDescriptionIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                                <label for="passAreaImageURL">{{lang("PassAreaImageURL")}}</label>
+                                                <input type="text" formControlName="passAreaImageURL" class="form-control" placeholder="{{lang('EnterRouteImage')}}" [ngClass]="{ 'is-invalid': submitted && f.passAreaImageURL.errors }">
+                                                <div *ngIf="submitted && f.passAreaImageURL.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.passAreaImageURL.errors.required">{{lang("AreaImageIsRequired")}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-check form-check-inline">
+                                                <input type="checkbox" checked formControlName="isPerkAvailable" id="isPerkAvailable" class="form-check-input" />
+                                                <label for="isPerkAvailable" class="form-label form-check-label">{{lang("IsPerkAvailable")}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12" *ngIf="f.isPerkAvailable.value">
+                                            <label for="perkDescription">{{lang("PerkDescription")}}</label>
+                                            <textarea type="perkDescription" formControlName="perkDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.isPerkAvailable.value && !f.perkDescription.value }"></textarea>
+                                            <div *ngIf="submitted && f.isPerkAvailable.value && !f.perkDescription.value" class="invalid-feedback">
+                                                <div *ngIf="f.isPerkAvailable.value">{{lang("PerkDescriptionIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" (click)="close()">
+                        {{lang("Cancel")}}
+                    </button>
+                    <!-- [disabled]="!editPassDescForm.form.valid" -->
+                    <!-- [disabled]="addPassForm.invalid" -->
+                    <button type="submit" class="btn btn-primary waves-effect">
+                        {{lang("Save")}}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

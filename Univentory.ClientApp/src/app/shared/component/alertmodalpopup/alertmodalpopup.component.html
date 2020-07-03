@@ -1,0 +1,28 @@
+<div bsModal #alertConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="alertConfirmationModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog">
+        <div #modalContent class="modal-content">
+            <div class="modal-header custom-modal-style">
+                <h4>
+                    <span *ngIf="type!='' && type!=undefined" class="text-capitalize">{{type}}</span>
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h4>
+            </div>
+            <div class="modal-body">
+                Dou you want to add <span *ngIf="selectedText!='' && selectedText!=undefined">{{selectedText}} as a new
+                    {{type}}</span>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" (click)="close()">
+                    Cancel
+                </button>
+                <!-- [disabled]="!createPTOForm.form.valid" -->
+                <button type="button" (click)="confirm()" class="btn btn-primary waves-effect">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>{{lang('AppName')}}</h3>
+            <strong>{{lang('AppSortName')}}</strong>
+        </div>
+        <ul class="list-unstyled components" *ngIf="menuItems.length > 0">
+            <li *ngFor="let item of menuItems" (click)="redirect(item)" [ngClass]="item.IsDefault?'active':''">
+                <a>
+                    <!-- <i [ngClass]="item.Icon"></i> -->
+                    <img src="{{item.Icon}}" [ngClass]="item.Name != 'User'?'menu-item-img':'user-avatar'" />
+                    <div *ngIf="toogleCount % 2 != 0">{{lang(item.Name)}}</div>
+                    <span *ngIf="toogleCount % 2 == 0">{{lang(item.Name)}}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <div class="navbar-header col-lg-8">
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary navbar-btn"
+                        (click)="sidebarCollapse()">
+                        <i class="fa fa-bars"></i>
+                        <span></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse col-lg-4" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto" *ngIf="_languages.currentLanguage != null">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span>
+                                    <img src="assets/imgs/language/{{_languages.currentLanguage.icon}}"
+                                        class="lang-img" /> {{_languages.currentLanguage.name}}
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right animate slideIn"
+                                aria-labelledby="navbarDropdown" *ngIf="_languages.languages.length > 0">
+                                <a class="dropdown-item" *ngFor="let item of _languages.languages"
+                                    (click)="onChangeLanguage(item)">
+                                    <span>
+                                        <img src="assets/imgs/language/{{item.icon}}" class="lang-img" /> {{item.name}}
+                                    </span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto" *ngIf="currentUserInfo != null">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span>
+                                    <img src="assets/imgs/user.svg" class="user-avatar-img" /> {{currentUserInfo}}
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right animate slideIn"
+                                aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" (click)="logout()">
+                                    <span>
+                                        <img src="assets/imgs/logout.svg" class="user-avatar-img" /> {{lang('LogOut')}}
+                                    </span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="col-lg-12">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+
+
+<!-- <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="fa fa-home"></i>
+                        Home
+                    </a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="#">Home 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-info"></i>
+                        About
+                    </a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <i class="fa fa-file-o"></i>
+                        Pages
+                    </a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Page 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul>
+                </li> -->

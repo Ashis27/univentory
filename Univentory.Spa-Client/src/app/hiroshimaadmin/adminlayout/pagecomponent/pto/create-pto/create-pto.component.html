@@ -1,0 +1,65 @@
+﻿<div bsModal #createPTOModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createPTOModal" aria-hidden="true"
+    [config]="{backdrop: 'static'}">
+    <div class="modal-dialog">
+        <div #modalContent class="modal-content">
+            <form *ngIf="active" [formGroup]="addPTOForm" #createPTOForm="ngForm" id="frm_create_user" novalidate (ngSubmit)="save()">
+                <div class="modal-header custom-modal-style">
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                        <span>{{lang("CreatePTO")}}</span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane animated fadeIn active" id="user-details">
+                            <div class="form-group">
+                                <label for="selectedLanguage">{{lang("SelectLanguage")}}</label>
+                                <div class="form-line">
+                                    <select id="selectedLanguage" class="validate form-control" formControlName="selectedLanguage" [ngClass]="{ 'is-invalid': submitted && f.selectedLanguage.errors }">
+                                        <option value="" optional-default-value>{{lang("SelectALanguage")}}</option>
+                                        <option [value]="item.id" *ngFor="let item of _languages.languages"> {{item.name}}</option>
+                                    </select>
+                                    <div *ngIf="submitted && f.selectedLanguage.errors" class="invalid-feedback">
+                                            <div *ngIf="f.selectedLanguage.errors.required">{{lang("LanguageIsRequired")}}</div>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ptoName">{{lang("PTOName")}}</label>
+                                <input type="text" formControlName="ptoName" class="form-control" placeholder="{{lang('EnterPTOName')}}" [ngClass]="{ 'is-invalid': submitted && f.ptoName.errors }"
+                                />
+                                <div *ngIf="submitted && f.ptoName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.ptoName.errors.required">{{lang("PTONameIsRequired")}}</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">{{lang("PTODescription")}}</label>
+                                <textarea type="description" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+                                <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                                    <div *ngIf="f.description.errors.required">{{lang("PTODescriptionIsRequired")}}</div>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" checked formControlName="isActive" id="isActive" class="form-check-input" />
+                                    <label for="isActive" class="form-label form-check-label">{{lang("IsActive")}}</label>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" (click)="close()">
+                        {{lang("Cancel")}}
+                    </button>
+                    <!-- [disabled]="!createPTOForm.form.valid" -->
+                    <button type="submit" class="btn btn-primary waves-effect">
+                        {{lang("Save")}}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+﻿<!-- ******************************************************** -->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card main-content">
+        <div class="header">
+            <h2>
+                <img alt="card_header_icon" class="card-header-icon" src="assets/imgs/header/document.svg">{{lang('TravellerFeedback')}}
+            </h2>
+        </div>
+        <div class="body table-responsive">
+            <!-- ******************************************************** -->
+            <table class="table table-hover table-striped" *ngIf="paginatedLanguages.items.length > 0">
+                <thead>
+                    <tr>
+                        <th>{{lang('SlNo')}}</th>
+                        <th>{{lang('Name')}}</th>
+                        <th>{{lang('ContactNumber')}}</th>
+                        <th>{{lang('FeedbackType')}}</th>
+                        <th>{{lang('FeedbackDescription')}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of paginatedLanguages.items; let index=index">
+                        <td>{{((searchParams.PageIndex - 1) * searchParams.PageSize) + (index + 1)}}</td>
+                        <td>{{item.fullName}}</td>
+                        <td>{{item.contactNumber}}</td>
+                        <td>{{item.feedbackType}}</td>
+                        <td>{{item.feedbackDescription}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- ******************************************************** -->
+            <div class="text-center" *ngIf="paginatedLanguages.items.length == 0 && !isAvaileble">
+                <p class="">
+                    <img alt="card_header_icon" class="not-found-icon cursor-pointer" src="assets/imgs/not-found.svg">
+                </p>
+                <p class="not-available" style="font-size:1.5rem">{{lang('NoResultFound')}}!</p>
+            </div>
+            <div class="text-right" *ngIf="paginatedLanguages.items.length > 0 && isAvaileble">
+                <button type="button" [disabled]="!paginatedLanguages.HasPreviousPage" *ngIf="paginatedLanguages.HasPreviousPage" class="btn btn-primary btn-sm btn-circle waves-effect text-center waves-circle waves-float pagination-btn"
+                    (click)="prev()">
+                    <i class="fa fa-chevron-left"></i>
+                    <span class="margin-left-5">{{lang('Prev')}}</span>
+                </button>
+                <button type="button" [disabled]="!paginatedLanguages.HasNextPage" *ngIf="paginatedLanguages.HasNextPage" class="btn btn-primary btn-sm btn-circle waves-effect text-center waves-circle waves-float pagination-btn"
+                    (click)="next()">
+                    <span class="margin-right-5">{{lang('Next')}}</span>
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

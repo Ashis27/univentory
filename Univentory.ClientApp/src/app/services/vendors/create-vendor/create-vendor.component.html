@@ -1,0 +1,79 @@
+<div class="card main-content">
+    <div class="col-lg-12">
+        <form [formGroup]="createVendor" #createVendorForm="ngForm" id="frm_create_vendor" novalidate
+            (ngSubmit)="save()">
+            <div class="col-lg-12 header m-b-20">
+                <h2>
+                    <span>
+                        <img alt="card_header_icon" class="card-header-icon" src="assets/images/header/users.svg">
+                        {{title}}
+                    </span>
+                </h2>
+            </div>
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="name">Name <span class="require-field"> *</span></label>
+                            <div class="form-line">
+                                <input type="text" formControlName="name" class="form-control" placeholder="Name"
+                                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                    <div *ngIf="f.name.errors.required">Name is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="mobileNumber">Mobile Number</label>
+                            <div class="form-line">
+                                <input type="number" formControlName="mobileNumber" class="form-control"
+                                    placeholder="Mobile number"
+                                    [ngClass]="{ 'is-invalid': submitted && f.mobileNumber.errors }" />
+                                <div *ngIf="submitted && f.mobileNumber.errors" class="invalid-feedback">
+                                    <div *ngIf="f.mobileNumber.errors.required">Mobile number is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <div class="form-line">
+                                <input type="text" formControlName="email" class="form-control" placeholder="Email"
+                                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                    <div *ngIf="f.email.errors.required">Email is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="billingAddress">Billing Address</label>
+                            <textarea type="text" formControlName="billingAddress" class="form-control" placeholder=""
+                                [ngClass]="{ 'is-invalid': submitted && f.billingAddress.errors }"></textarea>
+                            <div *ngIf="submitted && f.billingAddress.errors" class="invalid-feedback">
+                                <div *ngIf="f.billingAddress.errors.required">Billing address is required!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="float-right m-b-10">
+                <button type="button" class="btn btn-default waves-effect m-r-5" (click)="cancel()">
+                    Cancel
+                </button>
+                <button type="submit" class="btn btn-primary waves-effect">
+                    <i class="fa fa-save m-r-5"></i>Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- <app-alertmodalpopup #alertConfirmationModal (modalSave)="action()"></app-alertmodalpopup> -->

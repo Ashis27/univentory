@@ -1,0 +1,264 @@
+﻿<div bsModal #createPassModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="createPassModal"
+    aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div #modalContent class="modal-content">
+            <form *ngIf="active" [formGroup]="addPassForm" #createPassForm="ngForm" id="frm_create_user" novalidate (ngSubmit)="save()">
+                <div class="modal-header custom-modal-style">
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">
+                        <span>{{lang("CreatePass")}}</span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane animated fadeIn active" id="user-details">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <p class="pass-header-style">{{lang("PassInformation")}}</p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row">
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="selectedValidity">{{lang("PassValidity")}}</label>
+                                            <div class="row">
+                                                <div class="form-group col-lg-8 col-md-8 col-sm-8 col-xs-8 p-r-0" *ngIf="f.selectedValidity.value == 'days'">
+                                                    <input type="tel" spellcheck="false" autocapitalize="off" maxlength="10" (keypress)="onlyNumber($event)" formControlName="passValidityInDays"
+                                                        class="form-control" placeholder="{{lang('EnterValidyInDays')}}" [ngClass]="{ 'is-invalid': submitted && f.passValidityInDays.errors }"
+                                                    />
+                                                    <div *ngIf="submitted && f.passValidityInDays.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.passValidityInDays.errors.required">{{lang("PassValidityInDaysIsRequired")}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-lg-8 col-md-8 col-sm-8 col-xs-8 p-r-0" *ngIf="f.selectedValidity.value == 'hours'">
+                                                    <input type="tel" spellcheck="false" autocapitalize="off" maxlength="10" (keypress)="onlyNumber($event)" formControlName="passValidityInHours"
+                                                        class="form-control" placeholder="{{lang('EnterValidyInHours')}}" [ngClass]="{ 'is-invalid': submitted && f.passValidityInHours.errors }"
+                                                    />
+                                                    <div *ngIf="submitted && f.passValidityInHours.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.passValidityInHours.errors.required">{{lang("PassValidityInHoursIsRequired")}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 p-l-5">
+                                                    <div class="form-line">
+                                                        <select id="selectedValidity" class="validate form-control" formControlName="selectedValidity" style="background: #e9ecef;">
+                                                            <option value="days"> {{lang("SelectValidityInDays")}}</option>
+                                                            <option value="hours"> {{lang("SelectValidityInHours")}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="passExpiredDate">{{lang("PassExpiryDate")}}</label>
+                                            <input type="text" readonly formControlName="passExpiredDate" class="form-control" placeholder="Expiry date" [minDate]="minDate"
+                                                [maxDate]="" bsDatepicker [ngClass]="{ 'is-invalid': submitted && f.passExpiredDate.errors }">
+                                            <div *ngIf="submitted && f.passExpiredDate.errors" class="invalid-feedback">
+                                                <div *ngIf="f.passExpiredDate.errors.required">{{lang("PassExpiryDateIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="form-group col-lg-6 col-md-6 col-sm-6" *ngIf="f.selectedValidity.value == 'days'">
+                                            <label for="passValidityInDays">{{lang("PassValidityInDays")}}</label>
+                                            <input type="tel" spellcheck="false" autocapitalize="off" maxlength="10" (keypress)="onlyNumber($event)" formControlName="passValidityInDays"
+                                                class="form-control" placeholder="{{lang('EnterValidyInDays')}}" [ngClass]="{ 'is-invalid': submitted && f.passValidityInDays.errors }"
+                                            />
+                                            <div *ngIf="submitted && f.passValidityInDays.errors" class="invalid-feedback">
+                                                <div *ngIf="f.passValidityInDays.errors.required">{{lang("PassValidityInDaysIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6" *ngIf="f.selectedValidity.value == 'hours'">
+                                            <label for="passValidityInHours">{{lang("PassValidityInHours")}}</label>
+                                            <input type="tel" spellcheck="false" autocapitalize="off" maxlength="10" (keypress)="onlyNumber($event)" formControlName="passValidityInHours"
+                                                class="form-control" placeholder="{{lang('EnterValidyInHours')}}" [ngClass]="{ 'is-invalid': submitted && f.passValidityInHours.errors }"
+                                            />
+                                            <div *ngIf="submitted && f.passValidityInHours.errors" class="invalid-feedback">
+                                                <div *ngIf="f.passValidityInHours.errors.required">{{lang("PassValidityInHoursIsRequired")}}</div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <!-- <div class="row">
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="passExpiredDurationInDays">{{lang("PassExpiredDurationInDays")}}</label>
+                                            <input type="tel" spellcheck="false" autocapitalize="off" maxlength="10" (keypress)="onlyNumber($event)" formControlName="passExpiredDurationInDays"
+                                                class="form-control" placeholder="{{lang('EnterExpiredDurationInDays')}}" [ngClass]="{ 'is-invalid': submitted && f.passExpiredDurationInDays.errors }"
+                                            />
+                                            <div *ngIf="submitted && f.passExpiredDurationInDays.errors" class="invalid-feedback">
+                                                <div *ngIf="f.passExpiredDurationInDays.errors.required">{{lang("PassExpiredDurationInDaysIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="passExpiredDurationInHours">{{lang("PassExpiredDurationInHours")}}</label>
+                                            <input type="tel" spellcheck="false" autocapitalize="off" maxlength="10" (keypress)="onlyNumber($event)" formControlName="passExpiredDurationInHours"
+                                                class="form-control" placeholder="{{lang('EnterExpiredDurationInHours')}}" [ngClass]="{ 'is-invalid': submitted && f.passExpiredDurationInHours.errors }"
+                                            />
+                                            <div *ngIf="submitted && f.passExpiredDurationInHours.errors" class="invalid-feedback">
+                                                <div *ngIf="f.passExpiredDurationInHours.errors.required">{{lang("PassExpiredDurationInHoursIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="row">
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="adultPrice">{{lang("AdultPrice")}}</label>
+                                            <input type="tel" formControlName="adultPrice" class="form-control" placeholder="{{lang('AdultPricePlaceHolder')}}" spellcheck="false"
+                                                autocapitalize="off" maxlength="10" (keypress)="onlyNumber($event)" [ngClass]="{ 'is-invalid': submitted && f.adultPrice.errors }">
+                                            <div *ngIf="submitted && f.adultPrice.errors" class="invalid-feedback">
+                                                <div *ngIf="f.adultPrice.errors.required">{{lang("PriceIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="childPrice">{{lang("ChildPrice")}}</label>
+                                            <input type="tel" formControlName="childPrice" class="form-control" placeholder="{{lang('ChildPricePlaceHolder')}}" spellcheck="false"
+                                                autocapitalize="off" maxlength="10" (keypress)="onlyNumber($event)" [ngClass]="{ 'is-invalid': submitted && f.childPrice.errors }">
+                                            <div *ngIf="submitted && f.childPrice.errors" class="invalid-feedback">
+                                                <div *ngIf="f.childPrice.errors.required">{{lang("PriceIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="passExpiredDate">{{lang("PassExpiryDate")}}</label>
+                                            <input type="text" readonly formControlName="passExpiredDate" class="form-control" placeholder="Expiry date" [minDate]="minDate"
+                                                [maxDate]="" bsDatepicker [ngClass]="{ 'is-invalid': submitted && f.passExpiredDate.errors }">
+                                            <div *ngIf="submitted && f.passExpiredDate.errors" class="invalid-feedback">
+                                                <div *ngIf="f.passExpiredDate.errors.required">{{lang("PassExpiryDateIsRequired")}}</div>
+                                            </div>
+                                        </div> -->
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="defaultCurrency">{{lang("SelectCurrency")}}</label>
+                                            <div class="form-line">
+                                                <select id="defaultCurrency" class="validate form-control" formControlName="defaultCurrency" [ngClass]="{ 'is-invalid': submitted && f.defaultCurrency.errors }">
+                                                    <option value="" class="optional-default-value">{{lang("SelectACurrency")}}</option>
+                                                    <option [value]="item.id" *ngFor="let item of activeCurrencies"> {{item.name}}</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.defaultCurrency.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.defaultCurrency.errors.required">{{lang("CurrencyIsRequired")}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="remark">{{lang("Remark")}}</label>
+                                            <textarea type="text" formControlName="remark" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row">
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                            <label for="remark">{{lang("Remark")}}</label>
+                                            <textarea type="text" formControlName="remark" class="form-control"></textarea>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <p class="pass-header-style">{{lang("PassDescription")}}</p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="row">
+                                        <!--  <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="selectedLanguage">{{lang("SelectLanguage")}}</label>
+                                            <div class="form-line">
+                                                <select id="selectedLanguage" class="validate form-control" formControlName="selectedLanguage" [ngClass]="{ 'is-invalid': submitted && f.selectedLanguage.errors }">
+                                                    <option value="" class="optional-default-value">{{lang("SelectALanguage")}}</option>
+                                                    <option [value]="item.id" *ngFor="let item of _languages.languages"> {{item.name}}</option>
+                                                </select>
+                                                <div *ngIf="submitted && f.selectedLanguage.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.selectedLanguage.errors.required">{{lang("LanguageIsRequired")}}</div>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="passName">{{lang("PassName")}}</label>
+                                            <input type="text" formControlName="passName" class="form-control" placeholder="{{lang('EnterPassName')}}" [ngClass]="{ 'is-invalid': submitted && f.passName.errors }"
+                                            />
+                                            <div *ngIf="submitted && f.passName.errors" class="invalid-feedback">
+                                                <div *ngIf="f.passName.errors.required">{{lang("PassNameIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="passDesc">{{lang("PassDescription")}}</label>
+                                            <textarea type="passDesc" formControlName="passDesc" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.passDesc.errors }"></textarea>
+                                            <div *ngIf="submitted && f.passDesc.errors" class="invalid-feedback">
+                                                <div *ngIf="f.passDesc.errors.required">{{lang("PassDescriptionIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="passAreaImageURL">{{lang("PassAreaImageURL")}}</label>
+                                            <input type="text" formControlName="passAreaImageURL" class="form-control" placeholder="{{lang('EnterRouteImage')}}" [ngClass]="{ 'is-invalid': submitted && f.passAreaImageURL.errors }">
+                                            <div *ngIf="submitted && f.passAreaImageURL.errors" class="invalid-feedback">
+                                                <div *ngIf="f.passAreaImageURL.errors.required">{{lang("AreaImageIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                            <label for="passAreaDescription">{{lang("PassAreaDescription")}}</label>
+                                            <textarea type="passAreaDescription" formControlName="passAreaDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.passAreaDescription.errors }"></textarea>
+                                            <div *ngIf="submitted && f.passAreaDescription.errors" class="invalid-feedback">
+                                                <div *ngIf="f.passAreaDescription.errors.required">{{lang("AreaDescriptionIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-check form-check-inline">
+                                                <input type="checkbox" checked formControlName="isPerkAvailable" id="isPerkAvailable" class="form-check-input custom-check-box"
+                                                />
+                                                <label for="isPerkAvailable" class="form-label form-check-label">{{lang("IsPerkAvailable")}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12" *ngIf="f.isPerkAvailable.value">
+                                            <label for="perkDescription">{{lang("PerkDescription")}}</label>
+                                            <textarea type="perkDescription" formControlName="perkDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.isPerkAvailable.value && !f.perkDescription.value }"></textarea>
+                                            <div *ngIf="submitted && f.isPerkAvailable.value && !f.perkDescription.value" class="invalid-feedback">
+                                                <div *ngIf="f.isPerkAvailable.value">{{lang("PerkDescriptionIsRequired")}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <p class="pass-header-style">{{lang("AssignPTOs")}}</p>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="activePTOs.length > 0 && isAvaileble">
+                                    <div class="row">
+                                        <!-- <div class="form-group col-lg-3 col-md-3 col-sm-4" *ngFor="let item of activePTOs;let index = index;">
+                                            <div class="form-check form-check-inline" *ngIf="item.ptoDescription && item.ptoDescription.length > 0">
+                                                <input type="checkbox" name="{{index}}" formControlName="ptosAvailibilty" class="form-check-input" id="check{{index}}" [(ngModel)]="item.isChecked"  />
+                                                <label class="form-label form-check-label" for="check{{index}}" >{{item.ptoDescription[0].ptoName}}</label>
+                                            </div>
+                                        </div> -->
+                                        <div class="form-group col-lg-4 col-md-4 col-sm-4" *ngFor="let item of activePTOs;let index = index;">
+                                            <div class="form-check form-check-inline" *ngIf="item.ptoDescription && item.ptoDescription.length > 0">
+                                                <img alt="card_header_icon" class="action-icon cursor-pointer" id="check{{index}}" [src]="item.isChecked?'assets/imgs/check.svg':'assets/imgs/uncheck.svg'"
+                                                    (click)="item.isChecked = !item.isChecked">
+                                                <label class="form-label form-check-label" for="check{{index}}">{{item.ptoDescription[0].ptoName}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf="activePTOs.length  == 0 && !isAvaileble">
+                                    <p class="">
+                                        <img alt="card_header_icon" class="not-found-icon cursor-pointer" src="assets/imgs/not-found.svg">
+                                    </p>
+                                    <p class="not-available" style="font-size:1.5rem;color: #e06f6f;">{{lang('NoPTOAvailable')}}!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" (click)="close()">
+                        {{lang("Cancel")}}
+                    </button>
+                    <!-- [disabled]="!createPassForm.form.valid" -->
+                    <!-- [disabled]="addPassForm.invalid" -->
+                    <button type="submit" class="btn btn-primary waves-effect">
+                        {{lang("Save")}}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

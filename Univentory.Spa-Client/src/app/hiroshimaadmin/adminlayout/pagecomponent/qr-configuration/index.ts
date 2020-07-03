@@ -1,0 +1,1 @@
+﻿export * from './qr-configuration.component';

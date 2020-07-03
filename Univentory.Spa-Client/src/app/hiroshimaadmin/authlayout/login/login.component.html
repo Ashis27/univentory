@@ -1,0 +1,65 @@
+﻿<div class="col-lg-12 col-md-12 col-sm-12-col-xs-12 app-background-style">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-2 col-xs-1"> </div>
+        <div class="col-lg-6 col-md-6 col-sm-8 col-xs-10">
+            <h2 class="app-header-title">{{lang("AppLoginFormHeader")}}</h2>
+            <div class="login-form-outer-style">
+                <div class="login-form-content">
+                    <div class="form-content-style">
+                        <img src="assets/imgs/logo.png" alt="Hiroshima_logo" class="logo-style">
+                    </div>
+                    <p class="login-form-text-header">{{lang("Login")}}
+                        <!-- <span class="fa fa-hand-o-down"></span> -->
+                    </p>
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-back-style">
+                        <div class="form-group">
+                            <!-- <label for="userName">{{lang("UserName")}}</label> -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-envelope"></span>
+                                    </span>
+                                </div>
+                                <input type="text" formControlName="userName" autocomplete="off" placeholder="{{lang('EnterUserName')}}" class="form-control login-form-input"
+                                    [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
+                                <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                                    <div *ngIf="f.userName.errors.required">{{lang("UserNameIsRequired")}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <!-- <label for="password">{{lang("Password")}}</label> -->
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-unlock-alt" style="font-size: 1.5em;"></span>
+                                    </span>
+                                </div>
+                                <input type="password" formControlName="password" autocomplete="off" placeholder="{{lang('EnterPassword')}}" class="form-control login-form-input"
+                                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                    <div *ngIf="f.password.errors.required">{{lang("PasswordIsRequired")}}</div>
+                                    <div *ngIf="f.password.errors.minlength">{{lang('PasswordValidationMessage')}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group login-form-btn">
+                            <button [disabled]="loading" class="btn btn-primary">
+                                <span class="fa fa-sign-in"></span> {{lang("Login")}}</button>
+                            <!-- <img *ngIf="loading" class="pl-2" src=""/> -->
+                        </div>
+                        <!-- <div *ngIf="error" class="alert alert-danger">{{error}}</div> -->
+                    </form>
+
+                    <div class="row footer-lang-sec" *ngIf="_language_service.languages.length > 0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <img *ngFor="let item of _language_service.languages" (click)="onChangeLanguage(item)" src="assets/imgs/language/{{item.icon}}"
+                                class="currency-lang-img m-l-r-5 cursor-pointer" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-2 col-xs-1"></div>
+        </div>
+    </div>

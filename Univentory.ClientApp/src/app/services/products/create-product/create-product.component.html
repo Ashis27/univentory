@@ -1,0 +1,191 @@
+<div class="card main-content">
+    <div class="col-lg-12">
+        <form [formGroup]="createProduct" #createProductForm="ngForm" id="frm_create_product" novalidate
+            (ngSubmit)="save()">
+            <div class="col-lg-12 header m-b-20">
+                <h2>
+                    <span>
+                        <img alt="card_header_icon" class="card-header-icon" src="assets/images/header/product.svg">
+                        {{title}}
+                    </span>
+                </h2>
+            </div>
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="name">Name <span class="require-field"> *</span></label>
+                            <div class="form-line">
+                                <input type="text" formControlName="name" class="form-control" placeholder="Name"
+                                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                    <div *ngIf="f.name.errors.required">Name is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="code">Code <span class="require-field"> *</span></label>
+                            <input type="text" formControlName="code" class="form-control" placeholder="Code"
+                                [ngClass]="{ 'is-invalid': submitted && f.code.errors }" />
+                            <div *ngIf="submitted && f.code.errors" class="invalid-feedback">
+                                <div *ngIf="f.code.errors.required">Code is required!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="">Purchse Price(₹) <span class="require-field"> *</span></label>
+                            <input type="number" formControlName="purchasePrice" class="form-control"
+                                placeholder="Purchase price (ex:00.00)"
+                                [ngClass]="{ 'is-invalid': submitted && f.purchasePrice.errors }" />
+                            <div *ngIf="submitted && f.purchasePrice.errors" class="invalid-feedback">
+                                <div *ngIf="f.purchasePrice.errors.required">Purchase Price is required!</div>
+                                <div *ngIf="f.purchasePrice.errors">Enter 2 digit decimal number!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="sellPrice">Sell Price(₹) <span class="require-field"> *</span></label>
+                            <div class="form-line">
+                                <input type="number" formControlName="sellPrice" class="form-control"
+                                    placeholder="Sell price (ex:00.00)"
+                                    [ngClass]="{ 'is-invalid': submitted && f.sellPrice.errors }" />
+                                <div *ngIf="submitted && f.sellPrice.errors" class="invalid-feedback">
+                                    <div *ngIf="f.sellPrice.errors.required">Sell price is required!</div>
+                                    <div *ngIf="f.sellPrice.errors">Enter 2 digit decimal number!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="taxRateInPercentage">Tax (GST Rate) <span class="require-field">
+                                    *</span></label>
+                            <input type="number" formControlName="taxRateInPercentage" class="form-control"
+                                placeholder="Tax"
+                                [ngClass]="{ 'is-invalid': submitted && f.taxRateInPercentage.errors }" />
+                            <div *ngIf="submitted && f.taxRateInPercentage.errors" class="invalid-feedback">
+                                <div *ngIf="f.taxRateInPercentage.errors.required">GST rate is required!</div>
+                                <div *ngIf="f.taxRateInPercentage.errors">Enter 2 digit decimal number!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="discountInPercntage">Discount</label>
+                            <input type="number" formControlName="discountInPercntage" class="form-control"
+                                placeholder="Discount"
+                                [ngClass]="{ 'is-invalid': submitted && f.discountInPercntage.errors }" />
+                            <div *ngIf="submitted && f.discountInPercntage.errors" class="invalid-feedback">
+                                <div *ngIf="f.discountInPercntage.errors.required">Discount is required!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="categoryIdBackUp">Category <span class="require-field"> *</span></label>
+                            <div class="form-line">
+                                <input type="text" formControlName="categoryIdBackUp" [(ngModel)]="category"
+                                    [typeahead]="categories.items" typeaheadBindTo="id" typeaheadOptionField="name"
+                                    [typeaheadOptionsLimit]="8" [typeaheadMinLength]="0"
+                                    (typeaheadNoResults)="changeTypeaheadNoResults($event)"
+                                    (typeaheadOnSelect)="categoryOnSelect($event)" placeholder="Select category"
+                                    class="form-control" (keyup)="getCategories()"
+                                    [ngClass]="{ 'is-invalid': submitted && f.categoryIdBackUp.errors }">
+                                <div *ngIf="isNewCategory && category!=''">
+                                    <p class="typeaheadNoResultFound" (click)="addNewCategory()">Add New Category</p>
+                                </div>
+                                <div *ngIf="submitted && f.categoryIdBackUp.errors" class="invalid-feedback">
+                                    <div *ngIf="f.categoryIdBackUp.errors.required">Category is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="brandIdBackUp">Brand <span class="require-field"> *</span></label>
+                            <div class="form-line">
+                                <input type="text" formControlName="brandIdBackUp" [(ngModel)]="brand"
+                                    [typeahead]="brands.items" typeaheadBindTo="id" typeaheadOptionField="name"
+                                    [typeaheadOptionsLimit]="8" [typeaheadMinLength]="0"
+                                    (typeaheadNoResults)="changeTypeaheadNoResults($event)"
+                                    (typeaheadOnSelect)="brandOnSelect($event)" placeholder="Select brand"
+                                    class="form-control" (keyup)="getBrands()"
+                                    [ngClass]="{ 'is-invalid': submitted && f.brandIdBackUp.errors }">
+                                <div *ngIf="isNewBrand && brand!= ''">
+                                    <p class="typeaheadNoResultFound" (click)="addNewBrand()">Add New Brand</p>
+                                </div>
+                                <div *ngIf="submitted && f.brandIdBackUp.errors" class="invalid-feedback">
+                                    <div *ngIf="f.brandIdBackUp.errors.required">Brand is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="vendorIdBackUp">Vendor<span class="require-field"> *</span>
+                            </label>
+                            <div class="form-line">
+                                <input type="text" formControlName="vendorIdBackUp" [(ngModel)]="vendor"
+                                    [typeahead]="vendors.items" typeaheadBindTo="id" typeaheadOptionField="name"
+                                    [typeaheadOptionsLimit]="8" [typeaheadMinLength]="0"
+                                    (typeaheadNoResults)="changeTypeaheadNoResults($event)"
+                                    (typeaheadOnSelect)="vendorOnSelect($event)" placeholder="Select brand"
+                                    class="form-control" (keyup)="getVendors()"
+                                    [ngClass]="{ 'is-invalid': submitted && f.vendorIdBackUp.errors }">
+                                <div *ngIf="isNewVendor && vendor!=''">
+                                    <p class="typeaheadNoResultFound" (click)="addNewVendor()">Add New Vendor</p>
+                                </div>
+                                <div *ngIf="submitted && f.vendorIdBackUp.errors" class="invalid-feedback">
+                                    <div *ngIf="f.vendorIdBackUp.errors.required">Vendor is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="availableStock">Stock Available <span class="require-field"> *</span></label>
+                            <div class="form-line">
+                                <input type="number" formControlName="availableStock" class="form-control"
+                                    placeholder="Available stock"
+                                    [ngClass]="{ 'is-invalid': submitted && f.availableStock.errors }" />
+                                <div *ngIf="submitted && f.availableStock.errors" class="invalid-feedback">
+                                    <div *ngIf="f.availableStock.errors.required">Available stock is required!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea type="text" formControlName="description" class="form-control" placeholder=""
+                                [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+                            <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                                <div *ngIf="f.description.errors.required">Description is required!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="float-right m-b-10">
+                <button type="button" class="btn btn-default waves-effect m-r-5" (click)="cancel()">
+                    Cancel
+                </button>
+                <button type="submit" class="btn btn-primary waves-effect">
+                    <i class="fa fa-save m-r-5"></i>Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<app-alertmodalpopup #alertConfirmationModal (modalSave)="action()"></app-alertmodalpopup>

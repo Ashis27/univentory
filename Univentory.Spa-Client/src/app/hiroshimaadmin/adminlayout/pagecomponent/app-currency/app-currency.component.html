@@ -1,0 +1,67 @@
+﻿<!-- ******************************************************** -->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card main-content">
+        <div class="header">
+            <h2>
+                <img alt="card_header_icon" class="card-header-icon" src="assets/imgs/header/coins.svg">{{lang('CurrencyList')}}
+            </h2>
+        </div>
+        <div class="body table-responsive">
+            <!-- ******************************************************** -->
+            <table class="table table-hover table-striped" *ngIf="paginatedCurrencies.items.length > 0">
+                <thead>
+                    <tr>
+                        <th>{{lang('SlNo')}}</th>
+                        <th>{{lang('Icon')}}</th>
+                        <th>{{lang('Name')}}</th>
+                        <!-- <th>{{lang('SortName')}}</th> -->
+
+                        <th>{{lang('Default')}}</th>
+                        <th>{{lang('Active')}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of paginatedCurrencies.items; let index=index">
+                        <td>{{((searchParams.PageIndex - 1) * searchParams.PageSize) + (index + 1)}}</td>
+                        <td>
+                            <img src="assets/imgs/language/{{item.icon}}" class="currency-lang-img" />
+                        </td>
+                        <td>{{item.name}}</td>
+                        <!-- <td>{{item.DisplayName}}</td> -->
+
+                        <td>
+                            <!-- <i class="fa fa-check-square" *ngIf="item.isDefault" style="color:green;"></i> -->
+                            <i class="fa fa-check-square active-icon-style" *ngIf="item.isDefault"></i>
+                            <i class="fa fa-times-square deactive-icon-style" *ngIf="!item.isDefault"></i>
+                            <!-- <i class="fa fa-times-square" *ngIf="!item.isDefault" style="color:red;"></i> -->
+                        </td>
+                        <td>
+                            <i class="fa fa-check-square active-icon-style" *ngIf="item.isActive"></i>
+                            <i class="fa fa-times-square deactive-icon-style" *ngIf="!item.isActive"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- ******************************************************** -->
+            <div class="text-center" *ngIf="paginatedCurrencies.items.length == 0 && !isAvaileble">
+                <p class="">
+                    <img alt="card_header_icon" class="not-found-icon cursor-pointer" src="assets/imgs/not-found.svg">
+                </p>
+                <p class="not-available" style="font-size:1.5rem">{{lang('NoResultFound')}}!</p>
+            </div>
+            <div class="text-right" *ngIf="paginatedCurrencies.items.length > 0 && isAvaileble">
+                <button type="button" [disabled]="!paginatedCurrencies.HasPreviousPage" *ngIf="paginatedCurrencies.HasPreviousPage" class="btn btn-primary btn-sm btn-circle waves-effect text-center waves-circle waves-float pagination-btn"
+                    (click)="prev()">
+                    <i class="fa fa-chevron-left"></i>
+                    <span class="margin-left-5">{{lang('Prev')}}</span>
+                </button>
+                <button type="button" [disabled]="!paginatedCurrencies.HasNextPage" *ngIf="paginatedCurrencies.HasNextPage" class="btn btn-primary btn-sm btn-circle waves-effect text-center waves-circle waves-float pagination-btn"
+                    (click)="next()">
+                    <span class="margin-right-5">{{lang('Next')}}</span>
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

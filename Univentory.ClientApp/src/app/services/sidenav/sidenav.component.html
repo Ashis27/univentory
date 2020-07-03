@@ -1,0 +1,80 @@
+<div class="wrapper">
+    <!-- Sidebar Holder -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/images/logo.png" alt="univentory_logo" class="logo-style sidebar-logo">
+            <h3 class="m-t-3">Univentory</h3>
+            <strong>UT</strong>
+        </div>
+        <ul class="list-unstyled components" *ngIf="menuItems.length > 0">
+            <li *ngFor="let item of menuItems" (click)="redirect(item)" [ngClass]="item.IsDefault?'active':''">
+                <a>
+                    <!-- <i [ngClass]="item.Icon"></i> -->
+                    <img src="{{item.Icon}}" [ngClass]="item.Name != 'User'?'menu-item-img':'user-avatar'" />
+                    <div *ngIf="toogleCount % 2 != 0">{{item.Name}}</div>
+                    <span *ngIf="toogleCount % 2 == 0">{{item.Name}}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content Holder -->
+    <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <div class="navbar-header col-lg-1">
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary navbar-menu-btn"
+                        (click)="sidebarCollapse()">
+                        <i class="fa fa-bars"></i>
+                        <span></span>
+                    </button>
+                </div>
+                <div class="navbar-header col-lg-5">
+                    <h3 class="app-header-text-color" *ngIf="currentUserInfo != null && currentUserInfo != undefined">{{currentUserInfo.shopName}}</h3>
+                </div>
+                <div class="navbar-header col-lg-4">
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary navbar--btn navbar-btn"
+                        (click)="saleProductItem()">
+                        <i class="fa fa-plus m-r-5"></i>
+                        <span>Sale</span>
+                    </button>
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary navbar-btn navbar-btn"
+                        (click)="purchaseItem()">
+                        <i class="fa fa-plus  m-r-5"></i>
+                        <span>Purchase</span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse col-lg-2" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto" *ngIf="currentUserInfo != null">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle user-profile-sec" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="t-t-u f-w-500">
+                                    <img src="assets/images/user-profile.svg" class="user-avatar-img m-t--5" />
+                                    {{currentUserInfo.name}}
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right animate slideIn p-0"
+                                aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" (click)="getUserProfile()">
+                                    <span class="popup-text-size">
+                                        <img src="assets/images/user-profile.svg" class="logout-img" />
+                                        Profile
+                                    </span>
+                                </a>
+                                <a class="dropdown-item" (click)="logout()">
+                                    <span class="popup-text-size">
+                                        <img src="assets/images/logout.svg" class="logout-img" /> LogOut
+                                    </span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="col-lg-12">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

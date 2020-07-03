@@ -1,0 +1,28 @@
+.table tr th{
+    vertical-align: middle !important;
+    font-size: 13px;
+}
+.table th, .table td{
+    padding: 5px !important;
+}
+.table td input{
+    padding: 0px 0px 0px 5px !important;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+.input-border-color-none table input{
+    border-left: 1px solid #ced4da !important;
+}
+.add-item-btn-top{
+    margin-top: -20% !important;
+}
+.invoice-header-sec{
+    font-weight: 500;
+    color: #565656;
+    font-size: 14px;
+}

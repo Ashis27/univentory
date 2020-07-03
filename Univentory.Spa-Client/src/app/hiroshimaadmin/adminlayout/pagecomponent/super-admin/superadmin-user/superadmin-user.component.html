@@ -1,0 +1,75 @@
+﻿<!-- ******************************************************** -->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card main-content">
+        <div class="header">
+            <div class="row">
+                <div class="col-lg-9 col-md-9 col-sm-8">
+                    <h2>
+                        <img alt="card_header_icon" class="card-header-icon" src="assets/imgs/header/users.svg">{{lang('AdminUsers')}}
+                    </h2>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-4">
+                    <span>
+                        <button type="button" class="btn btn-primary btn-xs btn-circle waves-effect text-center waves-circle waves-float pull-right" (click)="createUser()">
+                            <i class="fa fa-plus"></i> {{lang('AddNewUser')}}
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="body table-responsive">
+            <!-- ******************************************************** -->
+            <table class="table table-hover table-striped" *ngIf="activeUsers.length > 0">
+                <thead>
+                    <tr>
+                        <th>{{lang('SlNo')}}</th>
+                        <th>{{lang('UserName')}}</th>
+                        <th>{{lang('Role')}}</th>
+                        <th class="text-center">{{lang('UserActionStatus')}}</th>
+                        <th class="text-center">{{lang('ResetPassword')}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of activeUsers; let index= index">
+                        <td>{{index+1}}</td>
+                        <td>{{item.userName}}</td>
+                        <td>{{item.role}}</td>
+                        <td align="center">
+                            <i class="fa fa-check-square active-icon-style" *ngIf="item.isActive" (click)="changeAction(item)"></i>
+                            <i class="fa fa-times-circle deactive-icon-style" *ngIf="!item.isActive" (click)="changeAction(item)"></i>
+                        </td>
+                        <td align="center">
+                            <button type="button" class="btn btn-primary btn-sm btn-circle waves-effect text-center waves-circle waves-float reset-btn"
+                                (click)="editUser(item)">
+                                <i class="fa fa-lock"></i>
+                                <span class="reset-btn-text">{{lang('Reset')}}</span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- ******************************************************** -->
+            <div class="text-center" *ngIf="activeUsers.length == 0 && !isAvaileble">
+                <p class="">
+                    <img alt="card_header_icon" class="not-found-icon cursor-pointer" src="assets/imgs/not-found.svg">
+                </p>
+                <p class="not-available" style="font-size:1.5rem">{{lang('NoResultFound')}}!</p>
+                <button type="button" class="btn btn-primary btn-circle waves-effect text-center waves-circle waves-float" (click)="createUser()">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
+            <!-- <div class="" *ngIf="paginatedUsers.totalCount > search.pageSize">
+                        <pagination-controls (pageChange)="getDataPage($event)" id="server"></pagination-controls>
+                    </div> -->
+
+            <create-admin-modal #createAdminModal (modalSave)="refresh()"></create-admin-modal>
+            <edit-admin-modal #editAdminModal (modalSave)="refresh()"></edit-admin-modal>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- ******************************************************** -->

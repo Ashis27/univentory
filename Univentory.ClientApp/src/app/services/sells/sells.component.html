@@ -1,0 +1,191 @@
+<div class="card main-content">
+    <div class="col-lg-12">
+        <!-- <form [formGroup]="sellProduct" #sellProductForm="ngForm" id="frm_create_sell_product" novalidate
+            (ngSubmit)="save()"> -->
+        <div class="col-lg-12 header m-b-20">
+            <h2 class="sale-header-border-bottom">
+                <span>
+                    <img alt="card_header_icon" class="card-header-icon" src="assets/images/header/sale.svg">
+                    {{title}}
+                </span>
+            </h2>
+        </div>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="consumer">Consumer <span class="require-field"> *</span></label>
+                        <div class="form-line">
+                            <input type="text" [(ngModel)]="searchConsumer" [typeahead]="consumers.items"
+                                typeaheadBindTo="id" typeaheadOptionField="name" [typeaheadOptionsLimit]="10"
+                                [typeaheadMinLength]="0" (typeaheadOnSelect)="consumerOnSelect($event)"
+                                placeholder="Search consumer" class="form-control" (keyup)="getConsumers()">
+                            <div *ngIf="isNewConsumer && searchConsumer!=''" class="m-t-5">
+                                <p class="typeaheadNoResultFound" (click)="addNewConsumer()">Add New consumer</p>
+                            </div>
+                            <!-- <div *ngIf="submitted && f.consumer.errors" class="invalid-feedback">
+                                    <div *ngIf="f.consumer.errors.required">Consumer is required!</div>
+                                </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 invoice-header-sec">
+                    <div class="row text-right">
+                        <div class="col-lg-9 text-right">
+                            <span>Invoice Number:</span>
+                        </div>
+                        <div class="col-lg-3 text-left p-l-0">
+                            <span>#{{this.invoiceNumber}}</span>
+                        </div>
+                    </div>
+                    <div class="row text-right">
+                        <div class="col-lg-9 text-right">
+                            <span>Invoice Date:</span>
+                        </div>
+                        <div class="col-lg-3 text-left p-l-0">
+                            <span>{{currentDate | date:'dd-MMM-yyyy'}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-9 text-right">
+                            <span>Payment Mode:</span>
+                        </div>
+                        <div class="col-lg-3 text-left p-l-0">
+                            <span>Cash</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m-t-20">
+                <div class="col-lg-12 p-l-0">
+                    <div class="form-group m-b-5">
+                        <label for="consumer">Product Item(s) <span class="require-field"> *</span></label>
+                    </div>
+                </div>
+                <div class="col-lg-12" *ngIf="sellItems.length > 0">
+                    <div class="row input-border-color-none">
+                        <table class="table">
+                            <thead>
+                                <tr class="table-th-background">
+                                    <th>#</th>
+                                    <th style="width: 20%;">Item name</th>
+                                    <th style="width: 20%;">Item Code</th>
+                                    <th style="width: 7%;">Unit</th>
+                                    <th class="text-center">Sale Price (₹)</th>
+                                    <th style="width: 7%;" class="text-center">Tax (GST)(%)</th>
+                                    <th class="text-center">Tax Amount(₹)</th>
+                                    <th style="width: 7%;" class="text-center">Discount (%)</th>
+                                    <th class="text-center">Discount Amount(₹)</th>
+                                    <th class="text-center">Total Amout(₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of sellItems; let index=index">
+                                    <td>
+                                        <i class="fa fa-trash app-icon-color cursor-pointer m-t-10"
+                                            *ngIf="sellItems.length > 1" (click)="removeItem(index)"></i>
+
+                                    </td>
+                                    <td>
+                                        <input type="text" class="input-border-color-none" [(ngModel)]="item.name"
+                                            [typeahead]="product.items" typeaheadBindTo="id" typeaheadOptionField="name"
+                                            [typeaheadOptionsLimit]="10" [typeaheadMinLength]="0"
+                                            (typeaheadOnSelect)="productOnSelect($event,item)" class="form-control"
+                                            (keyup)="getProductItems(item.name)">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="input-border-color-none" disabled
+                                            [(ngModel)]="item.code" class="form-control" placeholder="">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="input-border-color-none" [(ngModel)]="item.unit" mi
+                                            class="form-control" (keyup)="calculateItemTotalAmount(item)" placeholder=""
+                                            min="0">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="input-border-color-none"
+                                            [(ngModel)]="item.sellPrice" class="form-control"
+                                            (keyup)="calculateItemTotalAmount(item)" placeholder="">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="input-border-color-none"
+                                            [(ngModel)]="item.taxRateInPercentage" class="form-control"
+                                            (keyup)="calculateItemTotalAmount(item)" placeholder="">
+                                    </td>
+                                    <td>
+                                        <input type="number" [(ngModel)]="item.taxAmount" class="form-control" disabled
+                                            placeholder="">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="input-border-color-none"
+                                            [(ngModel)]="item.discountInPercntage" class="form-control"
+                                            (keyup)="calculateItemTotalAmount(item)" placeholder="">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="input-border-color-none"
+                                            [(ngModel)]="item.discountPrice" class="form-control"
+                                            (keyup)="calculateItemTotalAmountByDiscountPrice(item)" placeholder="">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="input-border-color-none"
+                                            [(ngModel)]="item.totalAmount" class="form-control" disabled placeholder="">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row m-b-10">
+                        <div class="col-lg-10 text-right">
+                            <span class="invoice-header-sec">Total Amount(₹):</span>
+                        </div>
+                        <div class="col-lg-2 p-r-0">
+                            <span>
+                                <input type="number" class="" [(ngModel)]="totalPrice" class="form-control" disabled
+                                    placeholder="">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row m-b-10">
+                        <div class="col-lg-10 text-right">
+                            <span class="invoice-header-sec">Received Amount(₹):</span>
+                        </div>
+                        <div class="col-lg-2 p-r-0">
+                            <span>
+                                <input type="number" class="" [(ngModel)]="totalPaid" class="form-control"
+                                    placeholder="">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 p-l-0">
+                    <span>
+                        <button type="button" (click)="addItem()"
+                            class="btn btn-primary btn-xs btn-circle waves-effect text-center waves-circle waves-float pull-lrft button-transparent add-item-btn-top">
+                            <i class="fa fa-plus"></i> Add Item
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="float-right m-b-10">
+                <button type="button" class="btn btn-default waves-effect m-r-5" (click)="cancel()">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-primary waves-effect" *ngIf="isSaleCompleted" (click)="generateInvoice('download')">
+                    <i class="fa fa-download m-r-5"></i>Download Invoice
+                </button>
+                <button type="button" class="btn btn-primary waves-effect" *ngIf="isSaleCompleted" (click)="generateInvoice('print')">
+                    <i class="fa fa-print m-r-5"></i>Print Invoice
+                </button>
+                <button type="button" class="btn btn-primary waves-effect" (click)="save()">
+                    <i class="fa fa-save m-r-5"></i>Save
+                </button>
+            </div>
+        </div>
+        <!-- </form> -->
+    </div>
+</div>
+
+<app-alertmodalpopup #alertConfirmationModal (modalSave)="action()"></app-alertmodalpopup>

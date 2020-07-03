@@ -1,0 +1,38 @@
+﻿<!-- ******************************************************** -->
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card main-content">
+        <div class="header">
+            <h2>
+                <img alt="card_header_icon" class="card-header-icon" src="assets/imgs/header/gear.svg">{{lang('QRCodeTimeConfiguration')}}
+            </h2>
+        </div>
+        <div class="body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 regenerate-time-sec" *ngIf="qrConfig && isAvaileble">
+                    <div class="row">
+                        <div class="form-group col-lg-4 col-md-4 col-sm-5 col-xs-12">
+                            <label for="regenerateTime" class="font-16 m-t-5">{{lang("RegenerationTimeInMin")}}</label>
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                            <input type="tel" id="regenerateTime" class="form-control" spellcheck="false" autocomplete="off" autocapitalize="off" min="0" maxlength="10" (keypress)="onlyNumber($event)"
+                                [(ngModel)]="qrConfig.regenerationTimeInMin" placeholder="{{lang('EnterTime')}}" />
+                        </div>
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                            <button type="button" class="btn btn-primary btn-sm m-t-3 btn-circle waves-effect text-center waves-circle waves-float pagination-btn"
+                                (click)="updateQrConfig()">
+                                <span class="">{{lang('Update')}}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ******************************************************** -->
+            <div class="text-center" *ngIf="!isAvaileble">
+                <p class="">
+                    <img alt="card_header_icon" class="not-found-icon cursor-pointer" src="assets/imgs/not-found.svg">
+                </p>
+                <p class="not-available" style="font-size:1.5rem">{{lang('NoResultFound')}}!</p>
+            </div>
+        </div>
+    </div>
+</div>
