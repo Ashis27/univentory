@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  univentory.api:
+    image: ${DOCKER_REGISTRY-}univentoryapi
+    build:
+      context: .
+      dockerfile: src/Univentory.API/src/Dockerfile

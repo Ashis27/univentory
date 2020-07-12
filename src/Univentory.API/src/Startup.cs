@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using MyShop.Identity.Infrastructure.Services;
 using Univentory.Common.filters;
 using Univentory.DAL;
@@ -63,6 +64,13 @@ namespace Univentory.API
 
             app.UseCors("CorsPolicy");
 
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Univentory API V1");
+            });
+
             app.UseRouting();
 
             app.UseAuthentication();
@@ -98,6 +106,28 @@ namespace Univentory.API
                     .AllowCredentials());
             });
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Univentory API",
+                    Description = "Univentory ASP.NET Core Web API",
+                    //TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Ashis Mahapatra",
+                        Email = "ashish.mahapatra1991@gmail.com",
+                        Url = new Uri("https://www.zedotech.com"),
+                    },
+                    //License = new OpenApiLicense
+                    //{
+                    //    Name = "Use under LICX",
+                    //    Url = new Uri("https://example.com/license"),
+                    //}
+                });
+            });
+
             return services;
         }
 
@@ -111,7 +141,7 @@ namespace Univentory.API
                     options.UseSqlServer(configuration["ConnectionString"],
                                     sqlServerOptionsAction: sqlOptions =>
                                     {
-                                        sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                                        sqlOptions.MigrationsAssembly("Univentory.DAL");
                                         //Configuring Connection Resiliency
                                         sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                                     });

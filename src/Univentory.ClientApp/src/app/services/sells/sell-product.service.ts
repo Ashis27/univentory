@@ -175,6 +175,18 @@ export class SaleProductService {
                   {
                     columns: [
                       {
+                        text: user.gstNumber != '' && user.gstNumber != null ? user.gstNumber : '',
+                        bold: true,
+                        color: '#565656;',
+                        fontSize: 13,
+                        alignment: 'left',
+                        margin: [0, 0, 0, 5],
+                      },
+                    ],
+                  },
+                  {
+                    columns: [
+                      {
                         text: user.address != null ? user.address : '',
                         bold: true,
                         color: '#565656',
@@ -189,7 +201,7 @@ export class SaleProductService {
             ],
             [
               {
-                text: 'INVOICE',
+                text: 'TAX INVOICE',
                 color: '#6c95d4',
                 width: '*',
                 fontSize: 26,

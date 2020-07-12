@@ -43,16 +43,16 @@ namespace Univentory.DAL
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public class UniventoryContextDesignFactory : IDesignTimeDbContextFactory<UniventoryContext>
-        {
-            public UniventoryContext CreateDbContext(string[] args)
-            {
-                var optionsBuilder = new DbContextOptionsBuilder<UniventoryContext>()
-                    .UseSqlServer("Server=.;Initial Catalog=UniventoryContext;Integrated Security=true");
+        //public class UniventoryContextDesignFactory : IDesignTimeDbContextFactory<UniventoryContext>
+        //{
+        //    public UniventoryContext CreateDbContext(string[] args)
+        //    {
+        //        var optionsBuilder = new DbContextOptionsBuilder<UniventoryContext>()
+        //            .UseSqlServer("Server=.;Initial Catalog=UniventoryContext;Integrated Security=true");
 
-                return new UniventoryContext(optionsBuilder.Options, null);
-            }
-        }
+        //        return new UniventoryContext(optionsBuilder.Options, null);
+        //    }
+        //}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

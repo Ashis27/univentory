@@ -16,6 +16,7 @@ namespace Univentory.API.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         public int GetUserId()
         {
             var value =  this._httpContextAccessor?.HttpContext?.User?.FindAll("sub")?.FirstOrDefault()?.Value;
@@ -27,6 +28,7 @@ namespace Univentory.API.Controllers
             return 0;
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
         public string GetUserName()
         {
             return this._httpContextAccessor.HttpContext.User.FindAll("user_name").FirstOrDefault().Value;
